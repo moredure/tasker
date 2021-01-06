@@ -20,14 +20,13 @@ func (tc *SimpleTaskManager) MarshalJSON() ([]byte, error) {
 }
 
 func (tc *SimpleTaskManager) Enqueue(tasks map[string]int) {
+	tc.Lock()
+	defer tc.Unlock()
 	for n, d := range tasks {
-		tc.Lock()
 		if _, exists := tc.states[n]; exists {
-			tc.Unlock()
 			continue
 		}
 		tc.states[n] = false
-		tc.Unlock()
 
 		go func(name string, duration int) {
 			tc.semaphore <- struct{}{}
