@@ -62,7 +62,7 @@ func (tc *taskController) Create (writer http.ResponseWriter, request *http.Requ
 }
 
 // not so rob pike style (Don't communicate by sharing memory; share memory by communicating)
-// duplicated not omitted but enqueued by duplicated name
+// duplicates not omitted, but enqueued by duplicated name
 func main() {
 	var nFlag int
 	flag.IntVar(&nFlag, "n", 10, "max number of concurrent executions")
