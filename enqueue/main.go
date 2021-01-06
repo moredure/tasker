@@ -21,7 +21,7 @@ type taskController struct {
 	executing map[string]bool
 }
 
-type Task struct {
+type task struct {
 	Name string
 	Running bool
 	Duration time.Duration
@@ -29,10 +29,10 @@ type Task struct {
 
 func (tc *taskController) Index (writer http.ResponseWriter, _ *http.Request) {
 	tc.lock.RLock()
-	tasks := make([]*Task, 0)
+	tasks := make([]*task, 0)
 	for name, durations := range tc.data {
 		for i, duration := range durations {
-			tasks = append(tasks, &Task{name, i == 0 && tc.executing[name], duration})
+			tasks = append(tasks, &task{name, i == 0 && tc.executing[name], duration})
 		}
 	}
 	tc.lock.RUnlock()
