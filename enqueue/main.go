@@ -37,8 +37,7 @@ func (tc *taskController) Index (writer http.ResponseWriter, _ *http.Request) {
 	}
 	tc.lock.RUnlock()
 
-	data, _ := json.Marshal(tasks)
-	if _, err := writer.Write(data); err != nil {
+	if err := json.NewEncoder(writer).Encode(tasks); err != nil {
 		log.Println(err)
 		http.Error(writer, err.Error(), 500)
 		return
