@@ -32,7 +32,7 @@ func main() {
 	if deduplicate {
 		tm = NewDeduplicatedTaskManager(nFlag)
 	} else {
-		tm = NewEnqueueTaskManager(nFlag)
+		tm = NewEnqueuingTaskManager(nFlag)
 	}
 
 	taskController := &TaskController{tm}

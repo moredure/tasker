@@ -79,7 +79,7 @@ func (t *EnqueuingTaskManager) Start() {
 	}
 }
 
-func NewEnqueueTaskManager(nFlag int) *EnqueuingTaskManager {
+func NewEnqueuingTaskManager(nFlag int) *EnqueuingTaskManager {
 	rwLock := new(sync.RWMutex)
 	return &EnqueuingTaskManager{
 		rwLock,
