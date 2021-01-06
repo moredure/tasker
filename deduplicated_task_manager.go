@@ -47,14 +47,15 @@ func (d *DeduplicatedTaskManager) Start() {
 		select {
 		case tasks := <-d.tasksInput:
 			for name, duration := range tasks {
+				if alreadyRunning := taskStates[name]; alreadyRunning {
+					continue
+				}
+
 				if runningCount == d.n {
 					if _, exists := pendingTasks[name]; !exists {
 						taskStates[name] = false
 						pendingTasks[name] = duration
 					}
-					continue
-				}
-				if taskStates[name] {
 					continue
 				}
 				runningCount++
