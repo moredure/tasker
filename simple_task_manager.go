@@ -16,7 +16,6 @@ type SimpleTaskManager struct {
 func (tc *SimpleTaskManager) MarshalJSON() ([]byte, error) {
 	tc.RLock()
 	defer tc.RUnlock()
-
 	return json.Marshal(tc.states)
 }
 
@@ -29,7 +28,6 @@ func (tc *SimpleTaskManager) Enqueue(tasks map[string]int) {
 		}
 		tc.states[n] = false
 		tc.Unlock()
-
 
 		go func(name string, duration int) {
 			tc.semaphore <- struct{}{}
@@ -47,6 +45,10 @@ func (tc *SimpleTaskManager) Enqueue(tasks map[string]int) {
 			<-tc.semaphore
 		}(n, d)
 	}
+}
+
+func (tc *SimpleTaskManager) Start() {
+	// to maintain compatibility with TaskManager interface
 }
 
 func NewSimpleTaskManager(nFlag int) *SimpleTaskManager {
