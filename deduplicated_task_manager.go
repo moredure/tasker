@@ -67,7 +67,7 @@ func (d *DeduplicatedTaskManager) Start() {
 				}(name, duration)
 			}
 		case response := <-d.requests:
-			tasks := make([]*TaskWithState, len(taskStates))
+			tasks := make([]*TaskWithState, 0)
 			for name, state := range taskStates {
 				tasks = append(tasks, &TaskWithState{Name: name, Running: state})
 			}
